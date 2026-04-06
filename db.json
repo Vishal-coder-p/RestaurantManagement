@@ -1,0 +1,89 @@
+{
+  "restaurant": {
+    "id": 1,
+    "name": "Restaurant Management",
+    "hero": "Build and manage your restaurant with live menu and order data.",
+    "description": "A dynamic dashboard powered by JSON Server for restaurant menus, orders, and business stats.",
+    "stats": [
+      { "id": 1, "label": "Menu Items", "value": 14 },
+      { "id": 2, "label": "Orders Today", "value": 8 },
+      { "id": 3, "label": "Categories", "value": 5 }
+    ]
+  },
+  "menu": [
+    {
+      "id": 1,
+      "name": "Hyderabadi Biryani",
+      "category": "Main",
+      "description": "Aromatic rice layered with spicy chicken and saffron.",
+      "price": "12.99",
+      "available": true
+    },
+    {
+      "id": 2,
+      "name": "Butter Chicken",
+      "category": "Main",
+      "description": "Creamy tomato sauce with tender chicken chunks.",
+      "price": "14.50",
+      "available": true
+    },
+    {
+      "id": 3,
+      "name": "Garlic Naan",
+      "category": "Bread",
+      "description": "Soft naan baked with garlic and butter.",
+      "price": "3.75",
+      "available": true
+    },
+    {
+      "id": 4,
+      "name": "Paneer Tikka",
+      "category": "Starter",
+      "description": "Grilled paneer pieces marinated in spices.",
+      "price": "10.00",
+      "available": false
+    },
+    {
+      "id": 5,
+      "name": "Masala Dosa",
+      "category": "Main",
+      "description": "Crispy dosa stuffed with spicy potato masala.",
+      "price": "8.50",
+      "available": true
+    },
+    {
+      "id": 6,
+      "name": "Mango Lassi",
+      "category": "Beverage",
+      "description": "Refreshing mango yogurt drink.",
+      "price": "4.25",
+      "available": true
+    }
+  ],
+  "orders": [
+    {
+      "id": 101,
+      "customer": "John Doe",
+      "items": "Hyderabadi Biryani x1, Garlic Naan x2",
+      "status": "Delivered",
+      "total": "20.49",
+      "date": "2026-04-06"
+    },
+    {
+      "id": 102,
+      "customer": "Jane Smith",
+      "items": "Butter Chicken x1, Mango Lassi x1",
+      "status": "In Progress",
+      "total": "18.75",
+      "date": "2026-04-06"
+    },
+    {
+      "id": 103,
+      "customer": "Alok Verma",
+      "items": "Masala Dosa x2",
+      "status": "Pending",
+      "total": "17.00",
+      "date": "2026-04-06"
+    }
+  ]
+}
