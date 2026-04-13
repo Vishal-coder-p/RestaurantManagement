@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+﻿import React, { useEffect, useState } from 'react'
 import Card from '../component/Card'
 import Loading from '../component/Loading'
 
@@ -13,13 +13,26 @@ interface MenuItem {
   available: boolean
 }
 
+const formatCurrency = (value: string) => {
+  const amount = Number.parseFloat(value)
+  if (Number.isNaN(amount)) return `Rs ${value}`
+
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 2,
+  }).format(amount)
+}
+
 const Menu: React.FC = () => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch(`${API_BASE}/menu`)
+    const controller = new AbortController()
+
+    fetch(`${API_BASE}/menu`, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error('Unable to load menu items')
@@ -29,12 +42,16 @@ const Menu: React.FC = () => {
       .then((data) => {
         setMenuItems(data)
       })
-      .catch((err) => {
-        setError(err.message)
+      .catch((err: Error) => {
+        if (err.name !== 'AbortError') {
+          setError(err.message)
+        }
       })
       .finally(() => {
         setLoading(false)
       })
+
+    return () => controller.abort()
   }, [])
 
   return (
@@ -51,7 +68,8 @@ const Menu: React.FC = () => {
               title={item.name}
               subtitle={item.category}
               badge={item.available ? 'Available' : 'Unavailable'}
-              footer={`₹${item.price}`}
+              badgeClassName={item.available ? 'badge-available' : 'badge-unavailable'}
+              footer={formatCurrency(item.price)}
             >
               <p>{item.description}</p>
             </Card>

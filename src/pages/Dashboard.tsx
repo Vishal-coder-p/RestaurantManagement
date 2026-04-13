@@ -1,9 +1,9 @@
-﻿import React from 'react'
+import React from 'react'
 import paneerTikkaImage from '../assets/paneer-tikka.jpg'
 import butterChickenImage from '../assets/butter-chicken.jpg'
 import chocoLavaImage from '../assets/choco-lava.jpg'
 
-const Home: React.FC = () => {
+const Dashboard: React.FC = () => {
   const overviewCards = [
     { label: "Today's Sales", value: 'Rs 52,300', colorClass: 'home-stat-green' },
     { label: 'Pending Orders', value: '08', colorClass: 'home-stat-orange' },
@@ -201,4 +201,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default Dashboard

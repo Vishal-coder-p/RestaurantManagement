@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import './Login.css'
 
 interface LoginProps {
   onLogin: (userData: { username: string; email: string }) => void
 }
+
+const DUMMY_USERS = [
+  { username: 'admin', password: 'admin123', email: 'admin@restaurant.com' },
+  { username: 'user', password: 'user123', email: 'user@restaurant.com' },
+  { username: 'manager', password: 'manager123', email: 'manager@restaurant.com' },
+]
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('')
@@ -11,32 +17,24 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  // Dummy credentials for demonstration
-  const DUMMY_USERS = [
-    { username: 'admin', password: 'admin123', email: 'admin@restaurant.com' },
-    { username: 'user', password: 'user123', email: 'user@restaurant.com' },
-    { username: 'manager', password: 'manager123', email: 'manager@restaurant.com' },
-  ]
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
-    // Simulate API call delay
+    const normalizedUsername = username.trim().toLowerCase()
+
     setTimeout(() => {
-      const user = DUMMY_USERS.find(
-        (u) => u.username === username && u.password === password
-      )
+      const user = DUMMY_USERS.find((entry) => entry.username === normalizedUsername && entry.password === password)
 
       if (user) {
-        // Successful login
         onLogin({ username: user.username, email: user.email })
         setUsername('')
         setPassword('')
       } else {
         setError('Invalid username or password. Please try again.')
       }
+
       setIsLoading(false)
     }, 500)
   }
@@ -45,16 +43,17 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     <div className='login-container'>
       <div className='login-box'>
         <div className='login-header'>
-          <h1>🍽️ Restaurant Management System</h1>
-          <p>Welcome Back</p>
+          <h1>Restaurant Management System</h1>
+          <p>Welcome back. Sign in to continue.</p>
         </div>
 
         <form onSubmit={handleLogin} className='login-form'>
           <div className='form-group'>
-            <label htmlFor='username'>Username:</label>
+            <label htmlFor='username'>Username</label>
             <input
               type='text'
               id='username'
+              autoComplete='username'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder='Enter your username'
@@ -63,10 +62,11 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           </div>
 
           <div className='form-group'>
-            <label htmlFor='password'>Password:</label>
+            <label htmlFor='password'>Password</label>
             <input
               type='password'
               id='password'
+              autoComplete='current-password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder='Enter your password'
@@ -77,16 +77,22 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           {error && <div className='error-message'>{error}</div>}
 
           <button type='submit' disabled={isLoading} className='login-btn'>
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
         <div className='demo-credentials'>
-          <h3>Demo Credentials:</h3>
+          <h3>Demo credentials</h3>
           <ul>
-            <li><strong>Admin:</strong> username: admin | password: admin123</li>
-            <li><strong>User:</strong> username: user | password: user123</li>
-            <li><strong>Manager:</strong> username: manager | password: manager123</li>
+            <li>
+              <strong>Admin:</strong> admin / admin123
+            </li>
+            <li>
+              <strong>User:</strong> user / user123
+            </li>
+            <li>
+              <strong>Manager:</strong> manager / manager123
+            </li>
           </ul>
         </div>
       </div>

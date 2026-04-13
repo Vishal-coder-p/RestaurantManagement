@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+﻿import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import './Navigation.css'
 
 interface UserData {
@@ -13,41 +13,56 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ user, onLogout }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const closeMenu = () => setIsMenuOpen(false)
+
   return (
     <nav className='navbar'>
       <div className='navbar-container'>
-        <Link to='/' className='navbar-logo'>
-          🍽️ Restaurant Management
-        </Link>
-        <ul className='nav-menu'>
+        <NavLink to='/' className='navbar-logo' onClick={closeMenu}>
+          Restaurant Management
+        </NavLink>
+
+        <button
+          type='button'
+          className='mobile-menu-button'
+          aria-label='Toggle navigation menu'
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          Menu
+        </button>
+
+        <ul className={`nav-menu ${isMenuOpen ? 'nav-menu-open' : ''}`}>
           <li className='nav-item'>
-            <Link to='/' className='nav-link'>
+            <NavLink to='/' className='nav-link' onClick={closeMenu}>
               Home
-            </Link>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <Link to='/menu' className='nav-link'>
+            <NavLink to='/menu' className='nav-link' onClick={closeMenu}>
               Menu
-            </Link>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <Link to='/orders' className='nav-link'>
+            <NavLink to='/orders' className='nav-link' onClick={closeMenu}>
               Orders
-            </Link>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <Link to='/about' className='nav-link'>
+            <NavLink to='/about' className='nav-link' onClick={closeMenu}>
               About
-            </Link>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <Link to='/contact' className='nav-link'>
+            <NavLink to='/contact' className='nav-link' onClick={closeMenu}>
               Contact
-            </Link>
+            </NavLink>
           </li>
           <li className='nav-item user-info'>
             <div className='user-section'>
-              <span className='username'>👤 {user?.username}</span>
+              <span className='username'>User: {user?.username}</span>
               <button onClick={onLogout} className='logout-btn'>
                 Logout
               </button>
